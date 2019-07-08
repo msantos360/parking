@@ -1,6 +1,7 @@
 package br.com.msantos.parking.models;
 
 import java.util.Calendar;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -35,11 +37,22 @@ public class Cliente {
 
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
-	private TipoCliente tipo = TipoCliente.NORMAL;
+	private TipoCliente tipo;
+
+	@OneToMany(mappedBy = "cliente")
+	private List<Veiculo> veiculo;
 
 	/** Hibernate only **/
 	@Deprecated
 	public Cliente() {
+	}
+
+	public List<Veiculo> getVeiculo() {
+		return veiculo;
+	}
+
+	public void setVeiculo(List<Veiculo> veiculo) {
+		this.veiculo = veiculo;
 	}
 
 	public TipoCliente getTipo() {
