@@ -41,6 +41,17 @@ public class Cliente {
 
 	@OneToMany(mappedBy = "cliente")
 	private List<Veiculo> veiculo;
+	
+	@OneToMany(mappedBy = "cliente")
+	private List<Movimentacoes> movimentacoes;
+
+	public List<Movimentacoes> getMovimentacoes() {
+		return movimentacoes;
+	}
+
+	public void setMovimentacoes(List<Movimentacoes> movimentacoes) {
+		this.movimentacoes = movimentacoes;
+	}
 
 	/** Hibernate only **/
 	@Deprecated

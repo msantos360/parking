@@ -1,5 +1,7 @@
 package br.com.msantos.parking.models;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -8,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Veiculo {
@@ -30,6 +33,17 @@ public class Veiculo {
 
 	@ManyToOne
 	private Cliente cliente;
+	
+	public List<Movimentacoes> getMovimentacoes() {
+		return movimentacoes;
+	}
+
+	public void setMovimentacoes(List<Movimentacoes> movimentacoes) {
+		this.movimentacoes = movimentacoes;
+	}
+
+	@OneToMany(mappedBy = "veiculo")
+	private List<Movimentacoes> movimentacoes;
 
 	/** Hibernate only **/
 	@Deprecated
