@@ -101,6 +101,8 @@ public class Movimentacoes {
 
 	public Long permanencia(Calendar entrada, Calendar saida) {
 
-		return saida.getTimeInMillis() - entrada.getTimeInMillis();
+		Long permanencia = saida.getTimeInMillis() - entrada.getTimeInMillis();
+
+		return permanencia;
 	}
 }

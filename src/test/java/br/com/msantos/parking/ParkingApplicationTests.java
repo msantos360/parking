@@ -37,11 +37,11 @@ public class ParkingApplicationTests {
 	@Test
 	public void contextLoads() {
 
-		Cliente joao = clienteR.save(controiCliente());
+		clienteR.save(controiCliente());
 
-		Veiculo pajero = veiculoR.save(constroiVeiculo(joao));
-
-		Movimentacoes movimentacao = movimentacoesR.save(realizaMovimentacao(joao, pajero));
+//		Veiculo pajero = veiculoR.save(constroiVeiculo(joao));
+//
+//		Movimentacoes movimentacao = movimentacoesR.save(realizaMovimentacao(joao, pajero));
 		
 	}
 
@@ -69,11 +69,11 @@ public class ParkingApplicationTests {
 
 		Calendar dataNascimento = Calendar.getInstance();
 
-		dataNascimento.set(Calendar.YEAR, 1980);
-		dataNascimento.set(Calendar.MONTH, Calendar.MARCH);
-		dataNascimento.set(Calendar.DAY_OF_MONTH, 26);
+		dataNascimento.set(Calendar.YEAR, 2000);
+		dataNascimento.set(Calendar.MONTH, Calendar.DECEMBER);
+		dataNascimento.set(Calendar.DAY_OF_MONTH, 07);
 
-		Cliente cliente = new Cliente("Joao Paulo Garcia", Long.parseLong("12365478944"), dataNascimento, dataHoje,
+		Cliente cliente = new Cliente("Ana Lopes", Long.parseLong("16948595233"), dataNascimento, dataHoje,
 				TipoCliente.NORMAL);
 
 		return cliente;
