@@ -31,15 +31,24 @@ public class Movimentacoes {
 	private BigDecimal valorHora;
 
 	@ManyToOne
-	private Cliente cliente;
+	private Veiculo veiculo;
 
 	@ManyToOne
-	private Veiculo veiculo;
+	private Cliente cliente;
 
 	/** Hibernate only **/
 	@Deprecated
 	public Movimentacoes() {
 
+	}
+
+	public Movimentacoes(Calendar horarioEntrada, Calendar horarioSaida, BigDecimal valorHora, Cliente cliente,
+			Veiculo veiculo) {
+		this.horarioEntrada = horarioEntrada;
+		this.horarioSaida = horarioSaida;
+		this.valorHora = valorHora;
+		this.cliente = cliente;
+		this.veiculo = veiculo;
 	}
 
 	public Long getId() {
@@ -48,14 +57,6 @@ public class Movimentacoes {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
 	}
 
 	public Veiculo getVeiculo() {
@@ -90,9 +91,16 @@ public class Movimentacoes {
 		this.valorHora = valorHora;
 	}
 
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
 	public Long permanencia(Calendar entrada, Calendar saida) {
 
 		return saida.getTimeInMillis() - entrada.getTimeInMillis();
 	}
-
 }

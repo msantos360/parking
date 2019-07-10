@@ -41,9 +41,22 @@ public class Cliente {
 
 	@OneToMany(mappedBy = "cliente")
 	private List<Veiculo> veiculo;
-	
+
 	@OneToMany(mappedBy = "cliente")
 	private List<Movimentacoes> movimentacoes;
+
+	/** Hibernate only **/
+	@Deprecated
+	public Cliente() {
+	}
+
+	public Cliente(String nome, Long cpf, Calendar dataNascimento, Calendar dataCadastro, TipoCliente tipo) {
+		this.nome = nome;
+		this.cpf = cpf;
+		this.dataNascimento = dataNascimento;
+		this.dataCadastro = dataCadastro;
+		this.tipo = tipo;
+	}
 
 	public List<Movimentacoes> getMovimentacoes() {
 		return movimentacoes;
@@ -51,11 +64,6 @@ public class Cliente {
 
 	public void setMovimentacoes(List<Movimentacoes> movimentacoes) {
 		this.movimentacoes = movimentacoes;
-	}
-
-	/** Hibernate only **/
-	@Deprecated
-	public Cliente() {
 	}
 
 	public List<Veiculo> getVeiculo() {

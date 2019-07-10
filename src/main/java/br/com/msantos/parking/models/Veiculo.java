@@ -1,7 +1,5 @@
 package br.com.msantos.parking.models;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -10,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @Entity
 public class Veiculo {
@@ -21,7 +18,7 @@ public class Veiculo {
 
 	@Column(nullable = false)
 	private String modelo;
-	
+
 	private String marca;
 
 	@Column(nullable = false, length = 8)
@@ -33,27 +30,24 @@ public class Veiculo {
 
 	@ManyToOne
 	private Cliente cliente;
-	
-	public List<Movimentacoes> getMovimentacoes() {
-		return movimentacoes;
-	}
-
-	public void setMovimentacoes(List<Movimentacoes> movimentacoes) {
-		this.movimentacoes = movimentacoes;
-	}
-
-	@OneToMany(mappedBy = "veiculo")
-	private List<Movimentacoes> movimentacoes;
 
 	/** Hibernate only **/
 	@Deprecated
 	public Veiculo() {
 	}
-	
+
+	public Veiculo(String modelo, String marca, String placa, TipoVeiculo tipo, Cliente cliente) {
+		this.modelo = modelo;
+		this.marca = marca;
+		this.placa = placa;
+		this.tipo = tipo;
+		this.cliente = cliente;
+	}
+
 	public String getMarca() {
 		return marca;
 	}
-	
+
 	public void setMarca(String marca) {
 		this.marca = marca;
 	}
