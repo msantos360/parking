@@ -50,11 +50,10 @@ public class Cliente {
 	public Cliente() {
 	}
 
-	public Cliente(String nome, Long cpf, Calendar dataNascimento, Calendar dataCadastro, TipoCliente tipo) {
+	public Cliente(String nome, Long cpf, Calendar dataNascimento, TipoCliente tipo) {
 		this.nome = nome;
 		this.cpf = cpf;
 		this.dataNascimento = dataNascimento;
-		this.dataCadastro = dataCadastro;
 		this.tipo = tipo;
 	}
 
