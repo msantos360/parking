@@ -18,7 +18,7 @@ public class VeiculoDto {
 	private TipoVeiculo tipo;
 
 	private Long clienteId;
-
+	
 	public VeiculoDto(Veiculo veiculo) {
 		this.id = veiculo.getId();
 		this.modelo = veiculo.getModelo();
@@ -51,7 +51,7 @@ public class VeiculoDto {
 	public TipoVeiculo getTipo() {
 		return tipo;
 	}
-
+	
 	public static Page<VeiculoDto> converter(Page<Veiculo> veiculo) {
 		return veiculo.map(VeiculoDto::new);
 	}
