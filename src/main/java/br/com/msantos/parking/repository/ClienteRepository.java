@@ -9,5 +9,5 @@ import br.com.msantos.parking.models.Cliente;
 public interface ClienteRepository extends JpaRepository<Cliente, Long>{
 
 	Page<Cliente> findByNome(String nome, Pageable paginacao);
-	
+
 }
