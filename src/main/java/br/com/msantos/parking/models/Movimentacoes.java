@@ -22,7 +22,7 @@ public class Movimentacoes {
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable = false)
-	private Calendar horarioEntrada;
+	private Calendar horarioEntrada = Calendar.getInstance();
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable = false)
@@ -42,9 +42,7 @@ public class Movimentacoes {
 
 	}
 
-	public Movimentacoes(Calendar horarioEntrada, Calendar horarioSaida, BigDecimal valorHora, Cliente cliente,
-			Veiculo veiculo) {
-		this.horarioEntrada = horarioEntrada;
+	public Movimentacoes(Calendar horarioSaida, BigDecimal valorHora, Cliente cliente, Veiculo veiculo) {
 		this.horarioSaida = horarioSaida;
 		this.valorHora = valorHora;
 		this.cliente = cliente;
@@ -99,10 +97,4 @@ public class Movimentacoes {
 		this.cliente = cliente;
 	}
 
-	public Long permanencia(Calendar entrada, Calendar saida) {
-
-		Long permanencia = saida.getTimeInMillis() - entrada.getTimeInMillis();
-
-		return permanencia;
-	}
 }
