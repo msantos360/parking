@@ -2,11 +2,13 @@ package br.com.msantos.parking.forms;
 
 import java.util.Calendar;
 
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import br.com.msantos.parking.models.Cliente;
 import br.com.msantos.parking.models.TipoCliente;
+import br.com.msantos.parking.validation.CpfValidation;
 
 public class ClienteForm {
 
@@ -15,6 +17,7 @@ public class ClienteForm {
 	private String nome;
 
 	@NotNull
+	@AssertTrue
 	private Long cpf;
 
 	@NotNull
@@ -28,7 +31,13 @@ public class ClienteForm {
 	}
 
 	public void setCpf(Long cpf) {
-		this.cpf = cpf;
+	
+		if(CpfValidation.validaCpf(cpf.toString())) {
+			
+			this.cpf = cpf;
+		}
+		
+		return;
 	}
 
 	public void setDataNascimento(Calendar dataNascimento) {
@@ -59,5 +68,7 @@ public class ClienteForm {
 
 		return new Cliente(nome, cpf, dataNascimento, tipo);
 	}
+	
+	
 
 }
