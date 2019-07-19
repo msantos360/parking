@@ -7,6 +7,8 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -37,6 +39,7 @@ public class EstacionamentoController {
 	private EstacionamentoRepository estacionamentoRepository;
 
 	@GetMapping
+	@Cacheable(value = "listaDeEstacionamentos")
 	public Page<EstacionamentoDto> lista(@RequestParam(required = false) String nome,
 			@PageableDefault(sort = "nome", direction = Direction.ASC, page = 0, size = 10) Pageable paginacao) {
 
@@ -63,6 +66,7 @@ public class EstacionamentoController {
 
 	@PostMapping
 	@Transactional
+	@CacheEvict(value = "listaDeEstacionamentos", allEntries = true)
 	public ResponseEntity<EstacionamentoDto> cadastra(@RequestBody @Valid EstacionamentoForm form,
 			UriComponentsBuilder uriBuilder) {
 
@@ -77,6 +81,7 @@ public class EstacionamentoController {
 
 	@DeleteMapping("/{id}")
 	@Transactional
+	@CacheEvict(value = "listaDeEstacionamentos", allEntries = true)
 	public ResponseEntity<?> remove(@PathVariable Long id) {
 
 		Optional<Estacionamento> estacionamentoOptional = estacionamentoRepository.findById(id);
@@ -90,6 +95,7 @@ public class EstacionamentoController {
 
 	@PutMapping("/{id}")
 	@Transactional
+	@CacheEvict(value = "listaDeEstacionamentos", allEntries = true)
 	public ResponseEntity<EstacionamentoDto> atualiza(@PathVariable Long id,
 			@RequestBody @Valid AtualizacaoEstacionamentoForm form) {
 
