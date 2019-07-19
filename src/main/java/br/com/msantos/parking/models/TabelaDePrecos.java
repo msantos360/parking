@@ -18,28 +18,38 @@ public class TabelaDePrecos {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
 	private TipoVeiculo tipo;
-	
+
 	@Column(nullable = false)
 	private BigDecimal precoDaPrimeiraHora;
-	
+
 	@Column(nullable = false)
 	private BigDecimal precoDasDemaisHoras;
 
 	private BigDecimal precoDaDiaria;
-	
+
 	private BigDecimal precoMensalidade;
-	
+
 	@ManyToOne
 	private Estacionamento estacionamento;
-	
-	/**Hibernate only**/
+
+	/** Hibernate only **/
 	@Deprecated
-	public TabelaDePrecos(){
-		
+	public TabelaDePrecos() {
+
+	}
+
+	public TabelaDePrecos(TipoVeiculo tipo, BigDecimal precoDaPrimeiraHora, BigDecimal precoDasDemaisHoras,
+			BigDecimal precoDaDiaria, BigDecimal precoMensalidade, Estacionamento estacionamento) {
+		this.tipo = tipo;
+		this.precoDaPrimeiraHora = precoDaPrimeiraHora;
+		this.precoDasDemaisHoras = precoDasDemaisHoras;
+		this.precoDaDiaria = precoDaDiaria;
+		this.precoMensalidade = precoMensalidade;
+		this.estacionamento = estacionamento;
 	}
 
 	public Long getId() {
@@ -61,11 +71,11 @@ public class TabelaDePrecos {
 	public BigDecimal getPrecoDaDiaria() {
 		return precoDaDiaria.setScale(2, RoundingMode.HALF_UP);
 	}
-	
+
 	public BigDecimal getPrecoMensalidade() {
 		return precoMensalidade.setScale(2, RoundingMode.HALF_UP);
 	}
-	
+
 	public Estacionamento getEstacionamento() {
 		return estacionamento;
 	}
@@ -93,7 +103,7 @@ public class TabelaDePrecos {
 	public void setPrecoMensalidade(BigDecimal precoMensalidade) {
 		this.precoMensalidade = precoMensalidade;
 	}
-	
+
 	public void setEstacionamento(Estacionamento estacionamento) {
 		this.estacionamento = estacionamento;
 	}
