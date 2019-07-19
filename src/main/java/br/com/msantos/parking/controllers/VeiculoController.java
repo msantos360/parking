@@ -31,7 +31,7 @@ import br.com.msantos.parking.repository.ClienteRepository;
 import br.com.msantos.parking.repository.VeiculoRepository;
 
 @RestController
-@RequestMapping("veiculo")
+@RequestMapping("/veiculo")
 public class VeiculoController {
 
 	@Autowired
