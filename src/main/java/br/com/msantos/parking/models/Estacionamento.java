@@ -1,10 +1,13 @@
 package br.com.msantos.parking.models;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Estacionamento {
@@ -18,6 +21,12 @@ public class Estacionamento {
 
 	@Column(nullable = false)
 	private String nome;
+	
+	@Column(nullable = false, unique = true)
+	private Long cnpj;
+	
+	@OneToMany(mappedBy = "estacionamento")
+	private List<TabelaDePrecos> tabelaDePrecos;
 
 	/** Hibernate only **/
 	@Deprecated
@@ -48,5 +57,23 @@ public class Estacionamento {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
+	public Long getCnpj() {
+		return cnpj;
+	}
+
+	public void setCnpj(Long cnpj) {
+		this.cnpj = cnpj;
+	}
+
+	public List<TabelaDePrecos> getTabelaDePrecos() {
+		return tabelaDePrecos;
+	}
+
+	public void setTabelaDePrecos(List<TabelaDePrecos> tabelaDePrecos) {
+		this.tabelaDePrecos = tabelaDePrecos;
+	}
+	
+	
 
 }
