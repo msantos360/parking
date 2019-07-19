@@ -2,7 +2,6 @@ package br.com.msantos.parking.forms;
 
 import java.util.Calendar;
 
-import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -17,7 +16,6 @@ public class ClienteForm {
 	private String nome;
 
 	@NotNull
-	@AssertTrue
 	private Long cpf;
 
 	@NotNull
