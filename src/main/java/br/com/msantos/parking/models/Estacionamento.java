@@ -34,6 +34,12 @@ public class Estacionamento {
 
 	}
 
+	public Estacionamento(String nome, Integer capacidadeVagas, Long cnpj) {
+		this.nome = nome;
+		this.capacidadeVagas = capacidadeVagas;
+		this.cnpj = cnpj;
+	}
+
 	public Long getId() {
 		return id;
 	}
