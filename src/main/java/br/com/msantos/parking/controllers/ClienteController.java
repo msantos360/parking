@@ -34,17 +34,17 @@ import br.com.msantos.parking.repository.ClienteRepository;
 public class ClienteController {
 
 	@Autowired
-	private ClienteRepository clienteR;
+	private ClienteRepository clienteRepository;
 
 	@GetMapping
 	public Page<ClienteDto> lista(@RequestParam(required = false) String nome,
 			@PageableDefault(sort = "nome", direction = Direction.ASC, page = 0, size = 10) Pageable paginacao) {
 
 		if (nome == null) {
-			Page<Cliente> cliente = clienteR.findAll(paginacao);
+			Page<Cliente> cliente = clienteRepository.findAll(paginacao);
 			return ClienteDto.converter(cliente);
 		} else {
-			Page<Cliente> cliente = clienteR.findByNome(nome, paginacao);
+			Page<Cliente> cliente = clienteRepository.findByNome(nome, paginacao);
 			return ClienteDto.converter(cliente);
 		}
 
@@ -55,7 +55,7 @@ public class ClienteController {
 	public ResponseEntity<ClienteDto> cadastra(@RequestBody @Valid ClienteForm form, UriComponentsBuilder uriBuilder) {
 
 		Cliente cliente = form.converter(form);
-		clienteR.save(cliente);
+		clienteRepository.save(cliente);
 
 		URI uri = uriBuilder.path("/cliente/{id}").buildAndExpand(cliente.getId()).toUri();
 
@@ -65,10 +65,10 @@ public class ClienteController {
 
 	@GetMapping("/{id}")
 	public ResponseEntity<ClienteDto> detalhe(@PathVariable Long id) {
-		Optional<Cliente> cliente = clienteR.findById(id);
+		Optional<Cliente> clienteOptional = clienteRepository.findById(id);
 
-		if (cliente.isPresent()) {
-			return ResponseEntity.ok(new ClienteDto(cliente.get()));
+		if (clienteOptional.isPresent()) {
+			return ResponseEntity.ok(new ClienteDto(clienteOptional.get()));
 		}
 
 		return ResponseEntity.notFound().build();
@@ -78,9 +78,9 @@ public class ClienteController {
 	@Transactional
 	public ResponseEntity<?> remove(@PathVariable Long id) {
 
-		Optional<Cliente> clienteOptional = clienteR.findById(id);
+		Optional<Cliente> clienteOptional = clienteRepository.findById(id);
 		if (clienteOptional.isPresent()) {
-			clienteR.deleteById(id);
+			clienteRepository.deleteById(id);
 			return ResponseEntity.ok().build();
 		}
 
@@ -91,9 +91,9 @@ public class ClienteController {
 	@Transactional
 	public ResponseEntity<ClienteDto> atualiza(@PathVariable Long id, @RequestBody @Valid AtualizacaoClienteForm form) {
 		
-		Optional<Cliente> clienteOptional = clienteR.findById(id);
+		Optional<Cliente> clienteOptional = clienteRepository.findById(id);
 		if(clienteOptional.isPresent()) {
-			Cliente cliente = form.atualiza(id, clienteR);
+			Cliente cliente = form.atualiza(id, clienteRepository);
 			return ResponseEntity.ok(new ClienteDto(cliente));
 		}
 		
