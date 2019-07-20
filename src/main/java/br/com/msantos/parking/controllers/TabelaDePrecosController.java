@@ -7,6 +7,8 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -41,6 +43,7 @@ public class TabelaDePrecosController {
 	private EstacionamentoRepository estacionamentoRepository;
 
 	@GetMapping
+	@Cacheable(value = "listaTabelaDePrecos")
 	public Page<TabelaDePrecosDto> lista(@RequestParam(required = false) Long id,
 			@PageableDefault(sort = "id", direction = Direction.ASC, page = 0, size = 10) Pageable paginacao) {
 
@@ -66,6 +69,7 @@ public class TabelaDePrecosController {
 
 	@PostMapping
 	@Transactional
+	@CacheEvict(value = "listaTabelaDePrecos", allEntries = true)
 	public ResponseEntity<TabelaDePrecosDto> cadastra(@RequestBody @Valid TabelaDePrecosForm form,
 			UriComponentsBuilder uriBuilder) {
 
@@ -80,6 +84,7 @@ public class TabelaDePrecosController {
 
 	@DeleteMapping("/{id}")
 	@Transactional
+	@CacheEvict(value = "listaTabelaDePrecos", allEntries = true)
 	public ResponseEntity<?> remove(@PathVariable Long id) {
 
 		Optional<TabelaDePrecos> tabelaDePrecosOptional = tabelaDePrecosRepository.findById(id);
@@ -95,6 +100,7 @@ public class TabelaDePrecosController {
 
 	@PutMapping("/{id}")
 	@Transactional
+	@CacheEvict(value = "listaTabelaDePrecos", allEntries = true)
 	public ResponseEntity<TabelaDePrecosDto> atualiza(@PathVariable Long id,
 			@RequestBody @Valid AtualizacaoTabelaDePrecosForm form) {
 
