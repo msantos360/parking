@@ -30,7 +30,7 @@ import br.com.msantos.parking.models.Cliente;
 import br.com.msantos.parking.repository.ClienteRepository;
 
 @RestController
-@RequestMapping("/cliente")
+@RequestMapping("/admin/cliente")
 public class ClienteController {
 
 	@Autowired
@@ -57,7 +57,7 @@ public class ClienteController {
 		Cliente cliente = form.converter(form);
 		clienteRepository.save(cliente);
 
-		URI uri = uriBuilder.path("/cliente/{id}").buildAndExpand(cliente.getId()).toUri();
+		URI uri = uriBuilder.path("/admin/cliente/{id}").buildAndExpand(cliente.getId()).toUri();
 
 		return ResponseEntity.created(uri).body(new ClienteDto(cliente));
 

@@ -31,7 +31,7 @@ import br.com.msantos.parking.repository.ClienteRepository;
 import br.com.msantos.parking.repository.VeiculoRepository;
 
 @RestController
-@RequestMapping("/veiculo")
+@RequestMapping("/admin/veiculo")
 public class VeiculoController {
 
 	@Autowired
@@ -86,7 +86,7 @@ public class VeiculoController {
 		Veiculo veiculo = form.conterter(form, clienteRepository);
 		veiculoRepository.save(veiculo);
 
-		URI uri = uriBuilder.path("/veiculo/{id}").buildAndExpand(veiculo.getId()).toUri();
+		URI uri = uriBuilder.path("/admin/veiculo/{id}").buildAndExpand(veiculo.getId()).toUri();
 
 		return ResponseEntity.created(uri).body(new VeiculoDto(veiculo));
 

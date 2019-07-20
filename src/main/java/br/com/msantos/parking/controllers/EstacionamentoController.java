@@ -32,7 +32,7 @@ import br.com.msantos.parking.models.Estacionamento;
 import br.com.msantos.parking.repository.EstacionamentoRepository;
 
 @RestController
-@RequestMapping("/estacionamento")
+@RequestMapping("/admin/estacionamento")
 public class EstacionamentoController {
 
 	@Autowired
@@ -73,7 +73,7 @@ public class EstacionamentoController {
 		Estacionamento estacionamento = form.converter(form);
 		estacionamentoRepository.save(estacionamento);
 
-		URI uri = uriBuilder.path("/estacionamento/{id}").buildAndExpand(estacionamento.getId()).toUri();
+		URI uri = uriBuilder.path("/admin/estacionamento/{id}").buildAndExpand(estacionamento.getId()).toUri();
 
 		return ResponseEntity.created(uri).body(new EstacionamentoDto(estacionamento));
 
