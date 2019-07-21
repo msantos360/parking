@@ -1,36 +1,41 @@
 package br.com.msantos.parking.models.tabelaDePrecos;
 
-import java.util.Calendar;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 public class Permanencia {
 
-	private Calendar entrada;
+	private LocalDateTime entrada;
 	
-	private Calendar saida;
+	private LocalDateTime saida;
 
-	public Permanencia(Calendar entrada, Calendar saida) {
+	public Permanencia(LocalDateTime entrada, LocalDateTime saida) {
 		this.entrada = entrada;
 		this.saida = saida;
 	}
 
-	public Calendar getEntrada() {
+	public LocalDateTime getEntrada() {
 		return entrada;
 	}
 
-	public Calendar getSaida() {
+	public LocalDateTime getSaida() {
 		return saida;
 	}
 	
 	public Long calculaPermanenciaEmMinutos() {
-		return (saida.getTimeInMillis() - entrada.getTimeInMillis())/60000;
+		return ChronoUnit.MINUTES.between(entrada, saida);
 	}
 	
 	public Long calculaPermanenciaEmHoras() {
-		return (calculaPermanenciaEmMinutos())/60;
+		return ChronoUnit.HOURS.between(entrada, saida);
 	}
 	
 	public Long calculaPermanenciaEmDias() {
-		return (calculaPermanenciaEmHoras())/24;
+		return ChronoUnit.DAYS.between(entrada, saida);
+	}
+	
+	public Long calculaPermanenciaEmMeses() {
+		return ChronoUnit.MONTHS.between(entrada, saida);
 	}
 	
 }
