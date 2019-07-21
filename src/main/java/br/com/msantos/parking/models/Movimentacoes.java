@@ -1,7 +1,5 @@
 package br.com.msantos.parking.models;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.Calendar;
 
 import javax.persistence.Column;
@@ -23,12 +21,10 @@ public class Movimentacoes {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable = false)
 	private Calendar horarioEntrada = Calendar.getInstance();
-
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable = false)
 	private Calendar horarioSaida;
-
-	private BigDecimal valorHora;
 
 	@ManyToOne
 	private Veiculo veiculo;
@@ -42,9 +38,8 @@ public class Movimentacoes {
 
 	}
 
-	public Movimentacoes(Calendar horarioSaida, BigDecimal valorHora, Cliente cliente, Veiculo veiculo) {
+	public Movimentacoes(Calendar horarioSaida, Cliente cliente, Veiculo veiculo) {
 		this.horarioSaida = horarioSaida;
-		this.valorHora = valorHora;
 		this.cliente = cliente;
 		this.veiculo = veiculo;
 	}
@@ -65,6 +60,14 @@ public class Movimentacoes {
 		this.veiculo = veiculo;
 	}
 
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
 	public Calendar getHorarioEntrada() {
 		return horarioEntrada;
 	}
@@ -80,21 +83,6 @@ public class Movimentacoes {
 	public void setHorarioSaida(Calendar horarioSaida) {
 		this.horarioSaida = horarioSaida;
 	}
-
-	public BigDecimal getValorHora() {
-		return valorHora.setScale(2, RoundingMode.HALF_DOWN);
-	}
-
-	public void setValorHora(BigDecimal valorHora) {
-		this.valorHora = valorHora;
-	}
-
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
+	
 
 }
