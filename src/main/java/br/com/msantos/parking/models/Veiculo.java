@@ -21,7 +21,7 @@ public class Veiculo {
 
 	private String marca;
 
-	@Column(nullable = false, length = 8)
+	@Column(nullable = false, length = 8, unique = true)
 	private String placa;
 
 	@Enumerated(EnumType.STRING)
