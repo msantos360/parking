@@ -1,10 +1,9 @@
 package br.com.msantos.parking.models.tabelaDePrecos;
 
 import java.math.BigDecimal;
-import java.util.Calendar;
+import java.time.LocalDateTime;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,22 +13,17 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class TestaValorDaPermanenciaDeVeiculo {
 
-	Permanencia permanencia;
-	Calendar saidaDoVeiculoDoEstacionamento = Calendar.getInstance();
-	Calendar entradaDoVeiculoNoEstacionamento = Calendar.getInstance();
+	private Permanencia permanencia;
 
-	@Before
-	public void dadosDeEntrada() {
-		entradaDoVeiculoNoEstacionamento.set(Calendar.DAY_OF_MONTH, 10);
-		entradaDoVeiculoNoEstacionamento.set(Calendar.HOUR, 10);
-		entradaDoVeiculoNoEstacionamento.set(Calendar.MINUTE, 30);
-	}
+	private LocalDateTime entradaDoVeiculoNoEstacionamento;
+	
+	private LocalDateTime saidaDoVeiculoDoEstacionamento;
 
 	@Test
 	public void testaValorDaPermaneciaDoCarroPorAte60minutos() {
-		saidaDoVeiculoDoEstacionamento.set(Calendar.DAY_OF_MONTH, 10);
-		saidaDoVeiculoDoEstacionamento.set(Calendar.HOUR, 11);
-		saidaDoVeiculoDoEstacionamento.set(Calendar.MINUTE, 30);
+		
+		entradaDoVeiculoNoEstacionamento = LocalDateTime.of(2019, 02, 28, 10, 00);
+		saidaDoVeiculoDoEstacionamento = LocalDateTime.of(2019, 02, 28, 11, 00);
 
 		permanencia = new Permanencia(entradaDoVeiculoNoEstacionamento, saidaDoVeiculoDoEstacionamento);
 		Precos precoDaPermanencia = new Carro();
@@ -37,7 +31,7 @@ public class TestaValorDaPermanenciaDeVeiculo {
 
 		calculador.realizaCalculo(permanencia, precoDaPermanencia);
 
-		BigDecimal precoEsperado = new BigDecimal("10.00");
+		BigDecimal precoEsperado = new BigDecimal("5.00");
 
 		Assert.assertEquals(precoEsperado, calculador.getTotalApagar());
 
@@ -45,17 +39,17 @@ public class TestaValorDaPermanenciaDeVeiculo {
 	
 	@Test
 	public void testaValorDaPermaneciaDoCarroAcimaDe60minutosMaisOAcrecimoDoValorDaPrimeiraHora() {
-		saidaDoVeiculoDoEstacionamento.set(Calendar.DAY_OF_MONTH, 10);
-		saidaDoVeiculoDoEstacionamento.set(Calendar.HOUR, 12);
-		saidaDoVeiculoDoEstacionamento.set(Calendar.MINUTE, 10);
 
+		entradaDoVeiculoNoEstacionamento = LocalDateTime.of(2019, 02, 28, 10, 00);
+		saidaDoVeiculoDoEstacionamento = LocalDateTime.of(2019, 02, 28, 12, 00);
+		
 		permanencia = new Permanencia(entradaDoVeiculoNoEstacionamento, saidaDoVeiculoDoEstacionamento);
 		Precos precoDaPermanencia = new Carro();
 		CalculadorDePrecos calculador = new CalculadorDePrecos();
 
 		calculador.realizaCalculo(permanencia, precoDaPermanencia);
 
-		BigDecimal precoEsperado = new BigDecimal("12.00");
+		BigDecimal precoEsperado = new BigDecimal("7.00");
 
 		Assert.assertEquals(precoEsperado, calculador.getTotalApagar());
 
@@ -63,9 +57,9 @@ public class TestaValorDaPermanenciaDeVeiculo {
 	
 	@Test
 	public void testaValorDaPermaneciaDoCarroPorDiaria() {
-		saidaDoVeiculoDoEstacionamento.set(Calendar.DAY_OF_MONTH, 12);
-		saidaDoVeiculoDoEstacionamento.set(Calendar.HOUR, 10);
-		saidaDoVeiculoDoEstacionamento.set(Calendar.MINUTE, 30);
+		
+		entradaDoVeiculoNoEstacionamento = LocalDateTime.of(2019, 02, 28, 10, 00);
+		saidaDoVeiculoDoEstacionamento = LocalDateTime.of(2019, 03, 02, 10, 00);
 
 		permanencia = new Permanencia(entradaDoVeiculoNoEstacionamento, saidaDoVeiculoDoEstacionamento);
 		
@@ -80,5 +74,5 @@ public class TestaValorDaPermanenciaDeVeiculo {
 		Assert.assertEquals(precoEsperado, calculador.getTotalApagar());
 
 	}
-
+	
 }
