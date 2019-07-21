@@ -21,7 +21,7 @@ public class Movimentacoes {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable = false)
 	private Calendar horarioEntrada = Calendar.getInstance();
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable = false)
 	private Calendar horarioSaida;
@@ -31,6 +31,9 @@ public class Movimentacoes {
 
 	@ManyToOne
 	private Cliente cliente;
+
+	@ManyToOne
+	private Pagamento pagamento;
 
 	/** Hibernate only **/
 	@Deprecated
@@ -46,6 +49,10 @@ public class Movimentacoes {
 
 	public Long getId() {
 		return id;
+	}
+
+	public Pagamento getPagamento() {
+		return pagamento;
 	}
 
 	public void setId(Long id) {
@@ -83,6 +90,11 @@ public class Movimentacoes {
 	public void setHorarioSaida(Calendar horarioSaida) {
 		this.horarioSaida = horarioSaida;
 	}
-	
+
+
+	public void setPagamento(Pagamento pagamento) {
+		this.pagamento = pagamento;
+	}
+
 
 }
