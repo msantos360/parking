@@ -1,7 +1,7 @@
 package br.com.msantos.parking.models.tabelaDePrecos;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.util.Calendar;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -15,17 +15,12 @@ public class TestaValorDaPermanenciaDeVeiculo {
 
 	private Permanencia permanencia;
 
-	private LocalDateTime entradaDoVeiculoNoEstacionamento;
-	
-	private LocalDateTime saidaDoVeiculoDoEstacionamento;
+	private Calendar entradaDoVeiculoNoEstacionamento;
 
 	@Test
 	public void testaValorDaPermaneciaDoCarroPorAte60minutos() {
-		
-		entradaDoVeiculoNoEstacionamento = LocalDateTime.of(2019, 02, 28, 10, 00);
-		saidaDoVeiculoDoEstacionamento = LocalDateTime.of(2019, 02, 28, 11, 00);
 
-		permanencia = new Permanencia(entradaDoVeiculoNoEstacionamento, saidaDoVeiculoDoEstacionamento);
+		permanencia = new Permanencia(entradaDoVeiculoNoEstacionamento);
 		Precos precoDaPermanencia = new Carro();
 		CalculadorDePrecos calculador = new CalculadorDePrecos();
 
@@ -36,14 +31,11 @@ public class TestaValorDaPermanenciaDeVeiculo {
 		Assert.assertEquals(precoEsperado, calculador.getTotalApagar());
 
 	}
-	
+
 	@Test
 	public void testaValorDaPermaneciaDoCarroAcimaDe60minutosMaisOAcrecimoDoValorDaPrimeiraHora() {
 
-		entradaDoVeiculoNoEstacionamento = LocalDateTime.of(2019, 02, 28, 10, 00);
-		saidaDoVeiculoDoEstacionamento = LocalDateTime.of(2019, 02, 28, 12, 00);
-		
-		permanencia = new Permanencia(entradaDoVeiculoNoEstacionamento, saidaDoVeiculoDoEstacionamento);
+		permanencia = new Permanencia(entradaDoVeiculoNoEstacionamento);
 		Precos precoDaPermanencia = new Carro();
 		CalculadorDePrecos calculador = new CalculadorDePrecos();
 
@@ -54,17 +46,14 @@ public class TestaValorDaPermanenciaDeVeiculo {
 		Assert.assertEquals(precoEsperado, calculador.getTotalApagar());
 
 	}
-	
+
 	@Test
 	public void testaValorDaPermaneciaDoCarroPorDiaria() {
-		
-		entradaDoVeiculoNoEstacionamento = LocalDateTime.of(2019, 02, 28, 10, 00);
-		saidaDoVeiculoDoEstacionamento = LocalDateTime.of(2019, 03, 02, 10, 00);
 
-		permanencia = new Permanencia(entradaDoVeiculoNoEstacionamento, saidaDoVeiculoDoEstacionamento);
-		
+		permanencia = new Permanencia(entradaDoVeiculoNoEstacionamento);
+
 		Precos precoDaPermanencia = new Carro();
-		
+
 		CalculadorDePrecos calculador = new CalculadorDePrecos();
 
 		calculador.realizaCalculo(permanencia, precoDaPermanencia);
@@ -74,5 +63,5 @@ public class TestaValorDaPermanenciaDeVeiculo {
 		Assert.assertEquals(precoEsperado, calculador.getTotalApagar());
 
 	}
-	
+
 }

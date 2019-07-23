@@ -1,6 +1,6 @@
 package br.com.msantos.parking.models.tabelaDePrecos;
 
-import java.time.LocalDateTime;
+import java.util.Calendar;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -13,17 +13,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class TestaPermanenciaDeVeiculo {
 
 	private Permanencia permanencia;
-	
-	private LocalDateTime entradaDoVeiculoNoEstacionamento;
-	
-	private LocalDateTime saidaDoVeiculoDoEstacionamento;
+
+	private Calendar entradaDoVeiculoNoEstacionamento;
 
 	@Test
 	public void calculaPermanenciaDeVeiculoEmMinutos() {
-		entradaDoVeiculoNoEstacionamento = LocalDateTime.of(2019, 02, 28, 10, 00);
-		saidaDoVeiculoDoEstacionamento = LocalDateTime.of(2019, 02, 28, 11, 00);
-		
-		permanencia = new Permanencia(entradaDoVeiculoNoEstacionamento, saidaDoVeiculoDoEstacionamento);
+
+		permanencia = new Permanencia(entradaDoVeiculoNoEstacionamento);
 
 		Long permanenciaDoveiculoNoEstacionamento = permanencia.calculaPermanenciaEmMinutos();
 
@@ -32,15 +28,15 @@ public class TestaPermanenciaDeVeiculo {
 		Long permanenciaEsperada = (long) 60;
 		Assert.assertEquals(permanenciaEsperada, permanenciaDoveiculoNoEstacionamento);
 	}
-	
-	
-	/**Teste da diaria referente ao mês de fevereiro entrando no dia 28/FEV e saindo 01/MAR**/
+
+	/**
+	 * Teste da diaria referente ao mês de fevereiro entrando no dia 28/FEV e saindo
+	 * 01/MAR
+	 **/
 	@Test
 	public void calculaPermanenciaDeVeiculoEmDiasEmFevereiro() {
-		entradaDoVeiculoNoEstacionamento = LocalDateTime.of(2019, 02, 28, 10, 00);
-		saidaDoVeiculoDoEstacionamento = LocalDateTime.of(2019, 03, 01, 10, 00);
-		
-		permanencia = new Permanencia(entradaDoVeiculoNoEstacionamento, saidaDoVeiculoDoEstacionamento);
+
+		permanencia = new Permanencia(entradaDoVeiculoNoEstacionamento);
 
 		Long permanenciaDoveiculoNoEstacionamento = permanencia.calculaPermanenciaEmDias();
 
