@@ -71,4 +71,5 @@ public class PagamentoController {
 		return ResponseEntity.created(uri).body(new PagamentoDto(pagamento));
 
 	}
+	
 }
