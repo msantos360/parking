@@ -22,11 +22,11 @@ import br.com.msantos.parking.dtos.MovimentacoesDto;
 import br.com.msantos.parking.forms.AtualizacaoMovimentacoesForm;
 import br.com.msantos.parking.forms.MovimentacoesForm;
 import br.com.msantos.parking.models.Movimentacoes;
-import br.com.msantos.parking.models.Pagamento;
-import br.com.msantos.parking.models.tabelaDePrecos.RealizaPagamento;
+import br.com.msantos.parking.models.tabelaDePrecos.CalculadorDePrecos;
+import br.com.msantos.parking.models.tabelaDePrecos.Carro;
+import br.com.msantos.parking.models.tabelaDePrecos.Permanencia;
 import br.com.msantos.parking.repository.ClienteRepository;
 import br.com.msantos.parking.repository.MovimentacoesRepository;
-import br.com.msantos.parking.repository.PagamentoRepository;
 import br.com.msantos.parking.repository.VeiculoRepository;
 
 @RestController
@@ -41,9 +41,6 @@ public class MovimentacoesController {
 
 	@Autowired
 	private VeiculoRepository veiculoRepository;
-
-	@Autowired
-	private PagamentoRepository pagamentoRepository;
 
 	@GetMapping("/{id}")
 	public ResponseEntity<MovimentacoesDto> detalhe(@PathVariable Long id) {
@@ -80,10 +77,13 @@ public class MovimentacoesController {
 
 		if (movimentacaoOptional.isPresent()) {
 
-			Pagamento pagamento = new RealizaPagamento().pagar(movimentacaoOptional.get(), veiculoRepository);
-			pagamentoRepository.save(pagamento);
-
-			Movimentacoes movimentacoes = form.atualiza(id, movimentacoesRepository, pagamento);
+			Permanencia permanencia = new Permanencia(movimentacaoOptional.get().getHorarioEntrada());
+			
+			CalculadorDePrecos cp = new CalculadorDePrecos();
+			
+			cp.realizaCalculo(permanencia, new Carro());
+			
+			Movimentacoes movimentacoes = form.atualiza(id, movimentacoesRepository, cp.getTotalApagar());
 			return ResponseEntity.ok(new MovimentacoesDto(movimentacoes));
 		}
 
