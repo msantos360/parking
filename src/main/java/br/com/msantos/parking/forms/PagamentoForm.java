@@ -1,7 +1,6 @@
 package br.com.msantos.parking.forms;
 
 import java.math.BigDecimal;
-import java.util.Calendar;
 
 import javax.validation.constraints.NotNull;
 
@@ -11,23 +10,17 @@ import br.com.msantos.parking.models.StatusDePagamento;
 
 public class PagamentoForm {
 
-	@NotNull
-	private BigDecimal totaApagar;
+	private BigDecimal totalApagar;
 
-	@NotNull
 	private BigDecimal totalPago;
 
-	@NotNull
 	private FormasDePagamento formaDePagamento;
 
 	@NotNull
 	private StatusDePagamento status;
 
-	@NotNull
-	private Calendar dataDoPagamento;
-
-	public void setTotaApagar(BigDecimal totaApagar) {
-		this.totaApagar = totaApagar;
+	public void setTotalApagar(BigDecimal totalApagar) {
+		this.totalApagar = totalApagar;
 	}
 
 	public void setTotalPago(BigDecimal totalPago) {
@@ -42,32 +35,8 @@ public class PagamentoForm {
 		this.status = status;
 	}
 
-	public void setDataDoPagamento(Calendar dataDoPagamento) {
-		this.dataDoPagamento = dataDoPagamento;
-	}
-
-	public BigDecimal getTotaApagar() {
-		return totaApagar;
-	}
-
-	public BigDecimal getTotalPago() {
-		return totalPago;
-	}
-
-	public FormasDePagamento getFormaDePagamento() {
-		return formaDePagamento;
-	}
-
-	public StatusDePagamento getStatus() {
-		return status;
-	}
-
-	public Calendar getDataDoPagamento() {
-		return dataDoPagamento;
-	}
-
 	public Pagamento converter(PagamentoForm form) {
-		return new Pagamento(totaApagar, totalPago, formaDePagamento, status, dataDoPagamento);
+		return new Pagamento(totalApagar, totalPago, formaDePagamento, status);
 	}
 
 }

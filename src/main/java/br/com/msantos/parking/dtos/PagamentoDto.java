@@ -14,7 +14,7 @@ public class PagamentoDto {
 
 	private Long id;
 
-	private BigDecimal totaApagar;
+	private BigDecimal totalApagar;
 
 	private BigDecimal totalPago;
 
@@ -26,7 +26,7 @@ public class PagamentoDto {
 
 	public PagamentoDto(Pagamento pagamento) {
 		this.id = pagamento.getId();
-		this.totaApagar = pagamento.getTotaApagar();
+		this.totalApagar = pagamento.getTotalApagar();
 		this.totalPago = pagamento.getTotalPago();
 		this.formaDePagamento = pagamento.getFormaDePagamento();
 		this.status = pagamento.getStatus();
@@ -37,8 +37,8 @@ public class PagamentoDto {
 		return id;
 	}
 
-	public BigDecimal getTotaApagar() {
-		return totaApagar.setScale(2, RoundingMode.HALF_UP);
+	public BigDecimal getTotalApagar() {
+		return totalApagar.setScale(2, RoundingMode.HALF_UP);
 	}
 
 	public BigDecimal getTotalPago() {
