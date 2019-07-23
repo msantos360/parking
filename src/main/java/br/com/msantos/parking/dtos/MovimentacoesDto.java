@@ -1,6 +1,8 @@
 package br.com.msantos.parking.dtos;
 
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import org.springframework.data.domain.Page;
@@ -26,6 +28,8 @@ public class MovimentacoesDto {
 	private Long veiculo;
 
 	private Long cliente;
+	
+	private DateFormat df = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
 
 	public MovimentacoesDto(Movimentacoes movimentacoes) {
 		this.id = movimentacoes.getId();
@@ -42,12 +46,12 @@ public class MovimentacoesDto {
 		return id;
 	}
 
-	public Calendar getHorarioEntrada() {
-		return horarioEntrada;
+	public String getHorarioEntrada() {
+		return df.format(horarioEntrada.getTime());
 	}
 
-	public Calendar getHorarioSaida() {
-		return horarioSaida;
+	public String getHorarioSaida() {
+		return df.format(horarioSaida.getTime());
 	}
 
 	public Long getVeiculo() {

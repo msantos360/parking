@@ -1,5 +1,7 @@
 package br.com.msantos.parking.dtos;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import org.springframework.data.domain.Page;
@@ -18,6 +20,8 @@ public class ClienteDto {
 	private Calendar dataNascimento;
 
 	private TipoCliente tipo;
+	
+	private DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 
 	public ClienteDto(Cliente cliente) {
 		this.id = cliente.getId();
@@ -39,8 +43,8 @@ public class ClienteDto {
 		return nome;
 	}
 
-	public Calendar getDataNascimento() {
-		return dataNascimento;
+	public String getDataNascimento() {
+		return df.format(dataNascimento.getTime());
 	}
 
 	public TipoCliente getTipo() {

@@ -1,6 +1,8 @@
 package br.com.msantos.parking.dtos;
 
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import br.com.msantos.parking.models.FormasDePagamento;
@@ -23,17 +25,19 @@ public class MovimentacoesSaidaDto {
 	private Long veiculo;
 
 	private Long cliente;
+	
+	private DateFormat df = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
 
 	public Long getId() {
 		return id;
 	}
 
-	public Calendar getHorarioEntrada() {
-		return horarioEntrada;
+	public String getHorarioEntrada() {
+		return df.format(horarioEntrada.getTime());
 	}
 
-	public Calendar getHorarioSaida() {
-		return horarioSaida;
+	public String getHorarioSaida() {
+		return df.format(horarioSaida.getTime());
 	}
 
 	public BigDecimal getTotalApagar() {
