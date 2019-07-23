@@ -27,6 +27,7 @@ import br.com.msantos.parking.models.tabelaDePrecos.Carro;
 import br.com.msantos.parking.models.tabelaDePrecos.Permanencia;
 import br.com.msantos.parking.repository.ClienteRepository;
 import br.com.msantos.parking.repository.MovimentacoesRepository;
+import br.com.msantos.parking.repository.TabelaDePrecosRepository;
 import br.com.msantos.parking.repository.VeiculoRepository;
 
 @RestController
@@ -41,6 +42,9 @@ public class MovimentacoesController {
 
 	@Autowired
 	private VeiculoRepository veiculoRepository;
+	
+	@Autowired
+	private TabelaDePrecosRepository tabelaDePrecosRepository;
 
 	@GetMapping("/{id}")
 	public ResponseEntity<MovimentacoesDto> detalhe(@PathVariable Long id) {
@@ -81,7 +85,7 @@ public class MovimentacoesController {
 			
 			CalculadorDePrecos cp = new CalculadorDePrecos();
 			
-			cp.realizaCalculo(permanencia, new Carro());
+			cp.realizaCalculo(permanencia, new Carro(tabelaDePrecosRepository));
 			
 			Movimentacoes movimentacoes = form.atualiza(id, movimentacoesRepository, cp.getTotalApagar());
 			return ResponseEntity.ok(new MovimentacoesDto(movimentacoes));
