@@ -20,10 +20,14 @@ public class Carro implements Precos {
 	@Override
 	public BigDecimal calculaValorDaPermanencia(Permanencia permanencia) {
 
+		/** tolerancia de 10 minutos = R$ ZERO **/
+		if (permanencia.calculaPermanenciaEmMinutos() <= 10) {
+			return totalApagar = BigDecimal.ZERO;
+		}
+
 		/** valor da primeira hora R$ **/
 		if (permanencia.calculaPermanenciaEmMinutos() <= 60) {
-			return totalApagar = BigDecimal
-					.valueOf(permanencia.calculaPermanenciaEmMinutos() * (precoDaPrimeiraHora / 60));
+			return totalApagar = BigDecimal.valueOf(precoDaPrimeiraHora);
 
 		}
 		/** valor da segunda hora + a primeira hora R$ **/
