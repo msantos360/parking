@@ -22,9 +22,7 @@ import br.com.msantos.parking.dtos.MovimentacoesDto;
 import br.com.msantos.parking.forms.AtualizacaoMovimentacoesForm;
 import br.com.msantos.parking.forms.MovimentacoesForm;
 import br.com.msantos.parking.models.Movimentacoes;
-import br.com.msantos.parking.models.tabelaDePrecos.CalculadorDePrecos;
-import br.com.msantos.parking.models.tabelaDePrecos.Carro;
-import br.com.msantos.parking.models.tabelaDePrecos.Permanencia;
+import br.com.msantos.parking.models.tabelaDePrecos.TipoDeVeiculo;
 import br.com.msantos.parking.repository.ClienteRepository;
 import br.com.msantos.parking.repository.MovimentacoesRepository;
 import br.com.msantos.parking.repository.TabelaDePrecosRepository;
@@ -42,7 +40,7 @@ public class MovimentacoesController {
 
 	@Autowired
 	private VeiculoRepository veiculoRepository;
-	
+
 	@Autowired
 	private TabelaDePrecosRepository tabelaDePrecosRepository;
 
@@ -79,15 +77,13 @@ public class MovimentacoesController {
 
 		Optional<Movimentacoes> movimentacaoOptional = movimentacoesRepository.findById(id);
 
+		//Determinar qual é o estacionamento associado a movimentação para realizar os calculos da permanencia
 		if (movimentacaoOptional.isPresent()) {
 
-			Permanencia permanencia = new Permanencia(movimentacaoOptional.get().getHorarioEntrada());
-			
-			CalculadorDePrecos cp = new CalculadorDePrecos();
-			
-			cp.realizaCalculo(permanencia, new Carro(tabelaDePrecosRepository));
-			
-			Movimentacoes movimentacoes = form.atualiza(id, movimentacoesRepository, cp.getTotalApagar());
+			TipoDeVeiculo tipoDeVeiculo = new TipoDeVeiculo();
+			tipoDeVeiculo.veiculo(movimentacaoOptional.get(), veiculoRepository, tabelaDePrecosRepository);
+
+			Movimentacoes movimentacoes = form.atualiza(id, movimentacoesRepository, tipoDeVeiculo.getTotalApagar());
 			return ResponseEntity.ok(new MovimentacoesDto(movimentacoes));
 		}
 
