@@ -42,6 +42,9 @@ public class Movimentacoes {
 
 	@ManyToOne
 	private Cliente cliente;
+	
+	@ManyToOne
+	private Estacionamento estacionamento;
 
 	/** Hibernate only **/
 	@Deprecated
@@ -49,9 +52,10 @@ public class Movimentacoes {
 
 	}
 
-	public Movimentacoes(Cliente cliente, Veiculo veiculo) {
+	public Movimentacoes(Cliente cliente, Veiculo veiculo, Estacionamento estacionamento) {
 		this.cliente = cliente;
 		this.veiculo = veiculo;
+		this.estacionamento = estacionamento;
 	}
 
 	public void setId(Long id) {
@@ -85,6 +89,10 @@ public class Movimentacoes {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
+	
+	public void setEstacionamento(Estacionamento estacionamento) {
+		this.estacionamento = estacionamento;
+	}
 
 	public Long getId() {
 		return id;
@@ -116,6 +124,10 @@ public class Movimentacoes {
 
 	public Cliente getCliente() {
 		return cliente;
+	}
+	
+	public Estacionamento getEstacionamento() {
+		return estacionamento;
 	}
 	
 	

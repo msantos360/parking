@@ -29,6 +29,8 @@ public class MovimentacoesDto {
 
 	private Long cliente;
 	
+	private Long estacionamento;
+	
 	private DateFormat df = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
 
 	public MovimentacoesDto(Movimentacoes movimentacoes) {
@@ -40,6 +42,7 @@ public class MovimentacoesDto {
 		this.formaDePagamento = movimentacoes.getFormaDePagamento();
 		this.veiculo = movimentacoes.getVeiculo().getId();
 		this.cliente = movimentacoes.getCliente().getId();
+		this.estacionamento = movimentacoes.getEstacionamento().getId();
 	}
 
 	public Long getId() {
@@ -72,6 +75,10 @@ public class MovimentacoesDto {
 
 	public FormasDePagamento getFormaDePagamento() {
 		return formaDePagamento;
+	}
+	
+	public Long getEstacionamento() {
+		return estacionamento;
 	}
 
 	public static Page<MovimentacoesDto> converter(Page<Movimentacoes> movimentacoes) {

@@ -24,6 +24,7 @@ import br.com.msantos.parking.forms.MovimentacoesForm;
 import br.com.msantos.parking.models.Movimentacoes;
 import br.com.msantos.parking.models.tabelaDePrecos.TipoDeVeiculo;
 import br.com.msantos.parking.repository.ClienteRepository;
+import br.com.msantos.parking.repository.EstacionamentoRepository;
 import br.com.msantos.parking.repository.MovimentacoesRepository;
 import br.com.msantos.parking.repository.TabelaDePrecosRepository;
 import br.com.msantos.parking.repository.VeiculoRepository;
@@ -40,6 +41,9 @@ public class MovimentacoesController {
 
 	@Autowired
 	private VeiculoRepository veiculoRepository;
+	
+	@Autowired
+	private EstacionamentoRepository estacionamentoRepository; 
 
 	@Autowired
 	private TabelaDePrecosRepository tabelaDePrecosRepository;
@@ -60,7 +64,7 @@ public class MovimentacoesController {
 	public ResponseEntity<MovimentacoesCadastroDto> cadastraEntradaVeiculo(@RequestBody @Valid MovimentacoesForm form,
 			UriComponentsBuilder uriBuilder) {
 
-		Movimentacoes movimentacoes = form.conterter(form, clienteRepository, veiculoRepository);
+		Movimentacoes movimentacoes = form.conterter(form, clienteRepository, veiculoRepository, estacionamentoRepository);
 
 		movimentacoesRepository.save(movimentacoes);
 

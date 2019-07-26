@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Optional;
 
+import br.com.msantos.parking.models.Movimentacoes;
 import br.com.msantos.parking.models.TabelaDePrecos;
 import br.com.msantos.parking.repository.TabelaDePrecosRepository;
 
@@ -19,8 +20,8 @@ public class Carro implements Precos {
 
 	private BigDecimal totalApagar;
 
-	public Carro(TabelaDePrecosRepository tabelaDePrecosRepository) {
-		tabelaDePrecosPorVeiculo(tabelaDePrecosRepository);
+	public Carro(TabelaDePrecosRepository tabelaDePrecosRepository, Movimentacoes movimentacoes) {
+		tabelaDePrecosPorVeiculo(tabelaDePrecosRepository, movimentacoes);
 	}
 
 	public BigDecimal getTotalApagar() {
@@ -30,18 +31,18 @@ public class Carro implements Precos {
 	@Override
 	public BigDecimal calculaValorDaPermanencia(Permanencia permanencia) {
 
-		/** tolerancia de 10 minutos = R$ ZERO **/
-		if (permanencia.calculaPermanenciaEmMinutos() <= 10) {
-			return totalApagar = BigDecimal.ZERO;
-		}
+//		/** tolerancia de 10 minutos = R$ ZERO **/
+//		if (permanencia.calculaPermanenciaEmMinutos() <= 10) {
+//			return totalApagar = BigDecimal.ZERO;
+//		}
 
 		/** valor da primeira hora R$ **/
-		if (permanencia.calculaPermanenciaEmMinutos() <= 60) {
+		if (permanencia.getPermanenciaEmMinutos() <= 60) {
 			return totalApagar = BigDecimal.valueOf(precoDaPrimeiraHora);
 
 		}
 		/** valor da segunda hora + a primeira hora R$ **/
-		if (permanencia.calculaPermanenciaEmMinutos() < 1440) {
+		if (permanencia.getPermanenciaEmMinutos() < 1440) {
 			return totalApagar = BigDecimal
 					.valueOf((permanencia.calculaPermanenciaEmMinutos() - 60) * (precoDasDemaisHoras / 60)
 							+ precoDaPrimeiraHora);
@@ -55,9 +56,11 @@ public class Carro implements Precos {
 	}
 
 	@Override
-	public void tabelaDePrecosPorVeiculo(TabelaDePrecosRepository tabelaDePrecosRepository) {
-
-		Optional<TabelaDePrecos> tabelaPrecosCarro = tabelaDePrecosRepository.findById((long) 1);
+	public void tabelaDePrecosPorVeiculo(TabelaDePrecosRepository tabelaDePrecosRepository, Movimentacoes movimentacoes) {
+		
+		//resolver a localização do estacionamento por preço
+		Long id = movimentacoes.getEstacionamento().getId();
+		Optional<TabelaDePrecos> tabelaPrecosCarro = tabelaDePrecosRepository.findById(id);
 
 		precoDaPrimeiraHora = tabelaPrecosCarro.get().getPrecoDaPrimeiraHora().doubleValue();
 		precoDasDemaisHoras = tabelaPrecosCarro.get().getPrecoDasDemaisHoras().doubleValue();

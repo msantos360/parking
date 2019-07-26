@@ -27,6 +27,9 @@ public class Estacionamento {
 	
 	@OneToMany(mappedBy = "estacionamento")
 	private List<TabelaDePrecos> tabelaDePrecos;
+	
+	@OneToMany(mappedBy = "estacionamento")
+	private List<Movimentacoes> movimentacoes;
 
 	/** Hibernate only **/
 	@Deprecated
@@ -55,6 +58,10 @@ public class Estacionamento {
 	public void setCapacidadeVagas(Integer capacidadeVagas) {
 		this.capacidadeVagas = capacidadeVagas;
 	}
+	
+	public void setMovimentacoes(List<Movimentacoes> movimentacoes) {
+		this.movimentacoes = movimentacoes;
+	}
 
 	public String getNome() {
 		return nome;
@@ -80,6 +87,8 @@ public class Estacionamento {
 		this.tabelaDePrecos = tabelaDePrecos;
 	}
 	
-	
+	public List<Movimentacoes> getMovimentacoes() {
+		return movimentacoes;
+	}
 
 }

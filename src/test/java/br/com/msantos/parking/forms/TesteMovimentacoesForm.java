@@ -8,6 +8,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import br.com.msantos.parking.models.Movimentacoes;
 import br.com.msantos.parking.repository.ClienteRepository;
+import br.com.msantos.parking.repository.EstacionamentoRepository;
 import br.com.msantos.parking.repository.MovimentacoesRepository;
 import br.com.msantos.parking.repository.VeiculoRepository;
 
@@ -23,6 +24,9 @@ public class TesteMovimentacoesForm {
 
 	@Autowired
 	private VeiculoRepository veiculoRepository;
+	
+	@Autowired
+	private EstacionamentoRepository estacionamentoRepository;
 
 	@Test
 	public void testeCadastroMovimentacoesPeloMovimentacoesFormSemPagamentoId() {
@@ -31,7 +35,7 @@ public class TesteMovimentacoesForm {
 		movimentacoesForm.setPlaca("JHU-7458");
 
 		Movimentacoes movimentacoes = movimentacoesForm.conterter(movimentacoesForm, clienteRepository,
-				veiculoRepository);
+				veiculoRepository, estacionamentoRepository);
 
 		movimentacoesRepository.save(movimentacoes);
 

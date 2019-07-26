@@ -12,8 +12,37 @@ public class Permanencia {
 
 	private LocalDateTime saida = LocalDateTime.now();
 
-	public Permanencia(Calendar entrada) {
-		this.entrada = toLocalDateTime(entrada);
+	private Long permanenciaEmMinutos;
+
+	private Long permanenciaEmHoras;
+
+	private Long permanenciaEmDias;
+
+	private Long permanenciaEmMeses;
+
+	public Permanencia(Calendar dataEHoraDaEntrada) {
+		this.entrada = toLocalDateTime(dataEHoraDaEntrada);
+
+		calculaPermanenciaEmMinutos();
+		calculaPermanenciaEmHoras();
+		calculaPermanenciaEmDias();
+		calculaPermanenciaEmMeses();
+	}
+
+	public Long getPermanenciaEmMinutos() {
+		return permanenciaEmMinutos;
+	}
+
+	public Long getPermanenciaEmHoras() {
+		return permanenciaEmHoras;
+	}
+
+	public Long getPermanenciaEmDias() {
+		return permanenciaEmDias;
+	}
+
+	public Long getPermanenciaEmMeses() {
+		return permanenciaEmMeses;
 	}
 
 	public LocalDateTime getEntrada() {
@@ -25,19 +54,26 @@ public class Permanencia {
 	}
 
 	public Long calculaPermanenciaEmMinutos() {
-		return ChronoUnit.MINUTES.between(entrada, saida);
+		permanenciaEmMinutos = ChronoUnit.MINUTES.between(entrada, saida);
+		return permanenciaEmMinutos;
 	}
 
 	public Long calculaPermanenciaEmHoras() {
-		return ChronoUnit.HOURS.between(entrada, saida);
+		permanenciaEmHoras = ChronoUnit.HOURS.between(entrada, saida);
+
+		return permanenciaEmHoras;
 	}
 
 	public Long calculaPermanenciaEmDias() {
-		return ChronoUnit.DAYS.between(entrada, saida);
+		permanenciaEmDias = ChronoUnit.DAYS.between(entrada, saida);
+
+		return permanenciaEmDias;
 	}
 
 	public Long calculaPermanenciaEmMeses() {
-		return ChronoUnit.MONTHS.between(entrada, saida);
+		permanenciaEmMeses = ChronoUnit.MONTHS.between(entrada, saida);
+
+		return permanenciaEmMeses;
 	}
 
 	private static LocalDateTime toLocalDateTime(Calendar calendar) {
@@ -47,6 +83,17 @@ public class Permanencia {
 		TimeZone tz = calendar.getTimeZone();
 		ZoneId zid = tz == null ? ZoneId.systemDefault() : tz.toZoneId();
 		return LocalDateTime.ofInstant(calendar.toInstant(), zid);
+	}
+
+	@Override
+	public String toString() {
+
+		String minutos = "Permanencia em minutos::: " + getPermanenciaEmMinutos();
+		String horas = "Permanencia em horas  ::: " + getPermanenciaEmHoras();
+		String dias = "Permanencia em dias   ::: " + getPermanenciaEmDias();
+		String meses = "Permanencia em meses  ::: " + getPermanenciaEmMeses();
+
+		return minutos + "\n" + horas + "\n" + dias + "\n" + meses;
 	}
 
 }

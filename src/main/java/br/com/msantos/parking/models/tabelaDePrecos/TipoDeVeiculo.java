@@ -27,7 +27,7 @@ public class TipoDeVeiculo {
 
 		if (tipoDoVeiculo.get().getTipo().equals(TipoVeiculo.CARRO)) {
 			this.totalApagar = new CalculadorDePrecos().realizaCalculo(permanencia,
-					new Carro(tabelaDePrecosRepository));
+					new Carro(tabelaDePrecosRepository, movimentacao));
 
 		}
 //		if (tipoDoVeiculo.get().getTipo().equals(TipoVeiculo.CARRO_SUV)) {
