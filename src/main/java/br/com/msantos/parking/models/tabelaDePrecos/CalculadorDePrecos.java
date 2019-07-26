@@ -1,15 +1,13 @@
 package br.com.msantos.parking.models.tabelaDePrecos;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 public class CalculadorDePrecos {
 
-	public BigDecimal realizaCalculo(Permanencia permanencia, Precos precos) {
+	public BigDecimal realizaCalculo(Precos precos) {
 		
-		BigDecimal totalApagar = precos.calculaValorDaPermanencia(permanencia);
+		return precos.getPrecosPorVeiculo();
 
-		return totalApagar.setScale(2, RoundingMode.HALF_UP);
 	}
 
 }
