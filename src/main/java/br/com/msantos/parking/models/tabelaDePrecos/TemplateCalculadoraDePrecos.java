@@ -5,6 +5,7 @@ import java.math.RoundingMode;
 
 import br.com.msantos.parking.models.Movimentacoes;
 import br.com.msantos.parking.repository.TabelaDePrecosRepository;
+import br.com.msantos.parking.repository.VeiculoRepository;
 
 public abstract class TemplateCalculadoraDePrecos {
 
@@ -22,14 +23,33 @@ public abstract class TemplateCalculadoraDePrecos {
 
 	protected Movimentacoes movimentacoes;
 
-	public TemplateCalculadoraDePrecos(TabelaDePrecosRepository tabelaDePrecosRepository, Movimentacoes movimentacoes) {
-		
+	protected VeiculoRepository veiculoRepository;
+
+	public TemplateCalculadoraDePrecos(TabelaDePrecosRepository tabelaDePrecosRepository, Movimentacoes movimentacoes, VeiculoRepository veiculoRepository) {
+
 		this.tabelaDePrecosRepository = tabelaDePrecosRepository;
 		this.movimentacoes = movimentacoes;
+		this.veiculoRepository = veiculoRepository;
 	}
 
 	public BigDecimal getTotalApagar() {
 		return totalApagar.setScale(2, RoundingMode.HALF_UP);
+	}
+
+	public Double getPrecoDaPrimeiraHora() {
+		return precoDaPrimeiraHora;
+	}
+
+	public Double getPrecoDasDemaisHoras() {
+		return precoDasDemaisHoras;
+	}
+
+	public Double getPrecoDaDiaria() {
+		return precoDaDiaria;
+	}
+
+	public Double getPrecoDaMensalidade() {
+		return precoDaMensalidade;
 	}
 
 	protected BigDecimal calculaValorDaPermanencia(Permanencia permanencia) {
@@ -46,9 +66,8 @@ public abstract class TemplateCalculadoraDePrecos {
 		}
 		/** valor da primeira hora + as demais horas R$ **/
 		if (permanencia.getPermanenciaEmMinutos() < 1440) {
-			return totalApagar = BigDecimal
-					.valueOf((permanencia.getPermanenciaEmMinutos() - 60) * (precoDasDemaisHoras / 60)
-							+ precoDaPrimeiraHora);
+			return totalApagar = BigDecimal.valueOf(
+					(permanencia.getPermanenciaEmMinutos() - 60) * (precoDasDemaisHoras / 60) + precoDaPrimeiraHora);
 		}
 
 		/** valor da diaria R$ **/

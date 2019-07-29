@@ -14,36 +14,34 @@ public class TestaPermanenciaDeVeiculo {
 
 	private Permanencia permanencia;
 
-	private Calendar entradaDoVeiculoNoEstacionamento;
+	private Calendar entradaDoVeiculoNoEstacionamento = Calendar.getInstance();
 
 	@Test
 	public void calculaPermanenciaDeVeiculoEmMinutos() {
 
+		entradaDoVeiculoNoEstacionamento.set(2019, Calendar.JULY, 29, 8, 30);
+
 		permanencia = new Permanencia(entradaDoVeiculoNoEstacionamento);
-
-		Long permanenciaDoveiculoNoEstacionamento = permanencia.calculaPermanenciaEmMinutos();
-
-		System.out.println("Permanencia em minutos: " + permanenciaDoveiculoNoEstacionamento);
 
 		Long permanenciaEsperada = (long) 60;
-		Assert.assertEquals(permanenciaEsperada, permanenciaDoveiculoNoEstacionamento);
+		
+		System.out.println(permanencia);
+
+		Assert.assertEquals(permanenciaEsperada, permanencia.getPermanenciaEmMinutos());
 	}
 
-	/**
-	 * Teste da diaria referente ao mês de fevereiro entrando no dia 28/FEV e saindo
-	 * 01/MAR
-	 **/
 	@Test
-	public void calculaPermanenciaDeVeiculoEmDiasEmFevereiro() {
+	public void calculaPermanenciaDeVeiculoEmDias() {
+
+		entradaDoVeiculoNoEstacionamento.set(2019, Calendar.JULY, 28);
 
 		permanencia = new Permanencia(entradaDoVeiculoNoEstacionamento);
 
-		Long permanenciaDoveiculoNoEstacionamento = permanencia.calculaPermanenciaEmDias();
-
-		System.out.println("Permanencia em dias: " + permanenciaDoveiculoNoEstacionamento);
-
 		Long permanenciaEsperada = (long) 1;
-		Assert.assertEquals(permanenciaEsperada, permanenciaDoveiculoNoEstacionamento);
+
+		System.out.println(permanencia);
+		
+		Assert.assertEquals(permanenciaEsperada, permanencia.getPermanenciaEmDias());
 	}
 
 }

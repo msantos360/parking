@@ -2,6 +2,7 @@ package br.com.msantos.parking.models.tabelaDePrecos;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -20,6 +21,8 @@ public class Permanencia {
 
 	private Long permanenciaEmMeses;
 
+	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+	
 	public Permanencia(Calendar dataEHoraDaEntrada) {
 		this.entrada = toLocalDateTime(dataEHoraDaEntrada);
 
@@ -88,12 +91,15 @@ public class Permanencia {
 	@Override
 	public String toString() {
 
+		String dataEhoraEntrada = "Data e hora entrada: " + getEntrada().format(formatter);
+		String dataEhoraSaida = "Data e hora saida: " + getSaida().format(formatter);
+
 		String minutos = "Permanencia em minutos::: " + getPermanenciaEmMinutos();
 		String horas = "Permanencia em horas  ::: " + getPermanenciaEmHoras();
 		String dias = "Permanencia em dias   ::: " + getPermanenciaEmDias();
 		String meses = "Permanencia em meses  ::: " + getPermanenciaEmMeses();
 
-		return minutos + "\n" + horas + "\n" + dias + "\n" + meses;
+		return dataEhoraEntrada + "\n" + dataEhoraSaida + "\n" + minutos + "\n" + horas + "\n" + dias + "\n" + meses;
 	}
 
 }
