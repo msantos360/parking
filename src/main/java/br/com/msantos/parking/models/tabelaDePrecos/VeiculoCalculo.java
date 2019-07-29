@@ -9,9 +9,9 @@ import br.com.msantos.parking.models.Veiculo;
 import br.com.msantos.parking.repository.TabelaDePrecosRepository;
 import br.com.msantos.parking.repository.VeiculoRepository;
 
-public class Carro extends TemplateCalculadoraDePrecos implements Precos {
+public class VeiculoCalculo extends TemplateCalculadoraDePrecos implements Precos {
 
-	public Carro(TabelaDePrecosRepository tabelaDePrecosRepository, Movimentacoes movimentacoes,
+	public VeiculoCalculo(TabelaDePrecosRepository tabelaDePrecosRepository, Movimentacoes movimentacoes,
 			VeiculoRepository veiculoRepository) {
 
 		super(tabelaDePrecosRepository, movimentacoes, veiculoRepository);

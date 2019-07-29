@@ -34,14 +34,14 @@ public class TestePrecoPorPermanenciaDeVeiculo {
 
 	BigDecimal totalApagar;
 
-	Carro carro;
+	VeiculoCalculo carro;
 
 	@Before
 	public void calculador() {
 		
 		movimentacoes = movimentacoesRepository.findById((long) 12);
 
-		carro = new Carro(tabelaDePrecosRepository, movimentacoes.get(), veiculoRepository);
+		carro = new VeiculoCalculo(tabelaDePrecosRepository, movimentacoes.get(), veiculoRepository);
 
 		totalApagar = new CalculadorDePrecos().realizaCalculo(carro);
 	}

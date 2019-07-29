@@ -24,7 +24,7 @@ import br.com.msantos.parking.forms.AtualizacaoMovimentacoesForm;
 import br.com.msantos.parking.forms.MovimentacoesForm;
 import br.com.msantos.parking.models.Movimentacoes;
 import br.com.msantos.parking.models.tabelaDePrecos.CalculadorDePrecos;
-import br.com.msantos.parking.models.tabelaDePrecos.Carro;
+import br.com.msantos.parking.models.tabelaDePrecos.VeiculoCalculo;
 import br.com.msantos.parking.repository.ClienteRepository;
 import br.com.msantos.parking.repository.EstacionamentoRepository;
 import br.com.msantos.parking.repository.MovimentacoesRepository;
@@ -85,7 +85,7 @@ public class MovimentacoesController {
 
 		if (movimentacaoOptional.isPresent()) {
 			
-			BigDecimal totalApagar = new CalculadorDePrecos().realizaCalculo(new Carro(tabelaDePrecosRepository, movimentacaoOptional.get(), veiculoRepository));
+			BigDecimal totalApagar = new CalculadorDePrecos().realizaCalculo(new VeiculoCalculo(tabelaDePrecosRepository, movimentacaoOptional.get(), veiculoRepository));
 
 			Movimentacoes movimentacoes = form.atualiza(id, movimentacoesRepository, totalApagar);
 			return ResponseEntity.ok(new MovimentacoesDto(movimentacoes));
