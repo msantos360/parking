@@ -24,6 +24,10 @@ public class MovimentacoesForm {
 		this.placa = placa;
 	}
 	
+	public String getPlaca() {
+		return placa;
+	}
+	
 	public void setEstacionamentoId(Long estacionamentoId) {
 		this.estacionamentoId = estacionamentoId;
 	}

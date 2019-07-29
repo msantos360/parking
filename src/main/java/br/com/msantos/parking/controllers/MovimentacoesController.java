@@ -23,6 +23,7 @@ import br.com.msantos.parking.dtos.MovimentacoesDto;
 import br.com.msantos.parking.forms.AtualizacaoMovimentacoesForm;
 import br.com.msantos.parking.forms.MovimentacoesForm;
 import br.com.msantos.parking.models.Movimentacoes;
+import br.com.msantos.parking.models.Veiculo;
 import br.com.msantos.parking.models.tabelaDePrecos.CalculadorDePrecos;
 import br.com.msantos.parking.models.tabelaDePrecos.VeiculoCalculo;
 import br.com.msantos.parking.repository.ClienteRepository;
@@ -43,9 +44,9 @@ public class MovimentacoesController {
 
 	@Autowired
 	private VeiculoRepository veiculoRepository;
-	
+
 	@Autowired
-	private EstacionamentoRepository estacionamentoRepository; 
+	private EstacionamentoRepository estacionamentoRepository;
 
 	@Autowired
 	private TabelaDePrecosRepository tabelaDePrecosRepository;
@@ -66,13 +67,22 @@ public class MovimentacoesController {
 	public ResponseEntity<MovimentacoesCadastroDto> cadastraEntradaVeiculo(@RequestBody @Valid MovimentacoesForm form,
 			UriComponentsBuilder uriBuilder) {
 
-		Movimentacoes movimentacoes = form.conterter(form, clienteRepository, veiculoRepository, estacionamentoRepository);
+		Movimentacoes movimentacoes = form.conterter(form, clienteRepository, veiculoRepository,
+				estacionamentoRepository);
 
-		movimentacoesRepository.save(movimentacoes);
+		Veiculo veiculo = veiculoRepository.findByPlaca(form.getPlaca());
+		Movimentacoes findVeiculoJaAlocado = movimentacoesRepository.findVeiculoJaAlocado(veiculo);
 
-		URI uri = uriBuilder.path("/admin/movimentacoes/{id}").buildAndExpand(movimentacoes.getId()).toUri();
+		if (findVeiculoJaAlocado == null) {
 
-		return ResponseEntity.created(uri).body(new MovimentacoesCadastroDto(movimentacoes));
+			movimentacoesRepository.save(movimentacoes);
+
+			URI uri = uriBuilder.path("/admin/movimentacoes/{id}").buildAndExpand(movimentacoes.getId()).toUri();
+
+			return ResponseEntity.created(uri).body(new MovimentacoesCadastroDto(movimentacoes));
+		}
+
+		return ResponseEntity.status(412).build();
 
 	}
 
@@ -84,8 +94,9 @@ public class MovimentacoesController {
 		Optional<Movimentacoes> movimentacaoOptional = movimentacoesRepository.findById(id);
 
 		if (movimentacaoOptional.isPresent()) {
-			
-			BigDecimal totalApagar = new CalculadorDePrecos().realizaCalculo(new VeiculoCalculo(tabelaDePrecosRepository, movimentacaoOptional.get(), veiculoRepository));
+
+			BigDecimal totalApagar = new CalculadorDePrecos().realizaCalculo(
+					new VeiculoCalculo(tabelaDePrecosRepository, movimentacaoOptional.get(), veiculoRepository));
 
 			Movimentacoes movimentacoes = form.atualiza(id, movimentacoesRepository, totalApagar);
 			return ResponseEntity.ok(new MovimentacoesDto(movimentacoes));
