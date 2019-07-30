@@ -42,33 +42,36 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 		auth.userDetailsService(autenticationService).passwordEncoder(new BCryptPasswordEncoder());
 
 	}
-
+	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		http.authorizeRequests().antMatchers(HttpMethod.GET, "/admin/cliente").permitAll()
-				.antMatchers(HttpMethod.GET, "/admin/cliente/*").permitAll()
+		http.authorizeRequests()
+			.antMatchers(HttpMethod.GET, "/admin/cliente").permitAll()
+			.antMatchers(HttpMethod.GET, "/admin/cliente/*").permitAll()
 
-				.antMatchers(HttpMethod.GET, "/admin/estacionamento").permitAll()
-				.antMatchers(HttpMethod.GET, "/admin/estacionamento/*").permitAll()
+			.antMatchers(HttpMethod.GET, "/admin/estacionamento").permitAll()
+			.antMatchers(HttpMethod.GET, "/admin/estacionamento/*").permitAll()
 
-				.antMatchers(HttpMethod.GET, "/admin/movimentacoes").permitAll()
-				.antMatchers(HttpMethod.GET, "/admin/movimentacoes/*").permitAll()
+			.antMatchers(HttpMethod.GET, "/admin/movimentacoes").permitAll()
+			.antMatchers(HttpMethod.GET, "/admin/movimentacoes/*").permitAll()
 
-				.antMatchers(HttpMethod.GET, "/admin/tabelaDePrecos").permitAll()
-				.antMatchers(HttpMethod.GET, "/admin/tabelaDePrecos/*").permitAll()
+			.antMatchers(HttpMethod.GET, "/admin/tabelaDePrecos").permitAll()
+			.antMatchers(HttpMethod.GET, "/admin/tabelaDePrecos/*").permitAll()
 
-				.antMatchers(HttpMethod.GET, "/admin/veiculo").permitAll()
-				.antMatchers(HttpMethod.GET, "/admin/veiculo/*").permitAll()
+			.antMatchers(HttpMethod.GET, "/admin/veiculo").permitAll()
+			.antMatchers(HttpMethod.GET, "/admin/veiculo/*").permitAll()
 
-				.antMatchers(HttpMethod.POST, "/auth").permitAll()
-				
-				.anyRequest().authenticated()
-				.and().csrf().disable()
-				
-				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-				
-				.and().addFilterBefore(new AutenticationByTokenFilter(tokenService, colaboradorRepository), UsernamePasswordAuthenticationFilter.class);
+			.antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
+			
+			.antMatchers(HttpMethod.POST, "/auth").permitAll()
+			
+			.anyRequest().authenticated()
+			.and().csrf().disable()
+			
+			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+			
+			.and().addFilterBefore(new AutenticationByTokenFilter(tokenService, colaboradorRepository), UsernamePasswordAuthenticationFilter.class);
 
 	}
 

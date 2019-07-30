@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -22,20 +23,29 @@ public class Colaborador implements UserDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
+	@Column(nullable = false)
 	private String nome;
-	
+
+	@Column(nullable = false, unique = true)
 	private String email;
-	
+
+	@Column(nullable = false)
 	private String senha;
-	
+
+	@Column(nullable = false)
+	private Boolean enabled;
+
+	@Column(nullable = false)
+	private Boolean locked;
+
 	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Perfil> perfis = new ArrayList<>();
-	
-	/**Hibernate only**/
+
+	/** Hibernate only **/
 	@Deprecated
 	public Colaborador() {
-		
+
 	}
 
 	public Long getId() {
@@ -69,11 +79,27 @@ public class Colaborador implements UserDetails {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-	
+
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public Boolean getLocked() {
+		return locked;
+	}
+
+	public void setLocked(Boolean locked) {
+		this.locked = locked;
+	}
+
 	public List<Perfil> getPerfis() {
 		return perfis;
 	}
-	
+
 	public void setPerfis(List<Perfil> perfis) {
 		this.perfis = perfis;
 	}
@@ -100,7 +126,7 @@ public class Colaborador implements UserDetails {
 
 	@Override
 	public boolean isAccountNonLocked() {
-		return true;
+		return this.locked;
 	}
 
 	@Override
@@ -110,8 +136,7 @@ public class Colaborador implements UserDetails {
 
 	@Override
 	public boolean isEnabled() {
-		return true;
+		return this.enabled;
 	}
-	
-	
+
 }
