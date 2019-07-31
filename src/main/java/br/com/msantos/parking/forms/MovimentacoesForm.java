@@ -31,6 +31,10 @@ public class MovimentacoesForm {
 	public void setEstacionamentoId(Long estacionamentoId) {
 		this.estacionamentoId = estacionamentoId;
 	}
+	
+	public Long getEstacionamentoId() {
+		return estacionamentoId;
+	}
 
 	public Movimentacoes conterter(MovimentacoesForm form, ClienteRepository clienteRepository,
 			VeiculoRepository veiculoRepository, EstacionamentoRepository estacionamentoRepository) {

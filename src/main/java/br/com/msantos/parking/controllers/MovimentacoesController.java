@@ -23,6 +23,7 @@ import br.com.msantos.parking.dtos.MovimentacoesDto;
 import br.com.msantos.parking.forms.AtualizacaoMovimentacoesForm;
 import br.com.msantos.parking.forms.MovimentacoesForm;
 import br.com.msantos.parking.models.Movimentacoes;
+import br.com.msantos.parking.models.VagasDisponiveisParking;
 import br.com.msantos.parking.models.Veiculo;
 import br.com.msantos.parking.models.tabelaDePrecos.CalculadorDePrecos;
 import br.com.msantos.parking.models.tabelaDePrecos.VeiculoCalculo;
@@ -73,7 +74,10 @@ public class MovimentacoesController {
 		Veiculo veiculo = veiculoRepository.findByPlaca(form.getPlaca());
 		Movimentacoes findVeiculoJaAlocado = movimentacoesRepository.findVeiculoJaAlocado(veiculo);
 
-		if (findVeiculoJaAlocado == null) {
+		Boolean autorizaEntrada = new VagasDisponiveisParking().autorizaEntrada(form.getEstacionamentoId(),
+				movimentacoesRepository, estacionamentoRepository);
+
+		if (findVeiculoJaAlocado == null && autorizaEntrada) {
 
 			movimentacoesRepository.save(movimentacoes);
 
