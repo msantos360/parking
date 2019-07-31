@@ -1,6 +1,7 @@
 package br.com.msantos.parking.models;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 
@@ -11,6 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -38,6 +41,9 @@ public class Colaborador implements UserDetails {
 
 	@Column(nullable = false)
 	private Boolean locked;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	private Calendar dataCadastro = Calendar.getInstance();
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Perfil> perfis = new ArrayList<>();
@@ -102,6 +108,14 @@ public class Colaborador implements UserDetails {
 
 	public void setPerfis(List<Perfil> perfis) {
 		this.perfis = perfis;
+	}
+	
+	public Calendar getDataCadastro() {
+		return dataCadastro;
+	}
+	
+	public void setDataCadastro(Calendar dataCadastro) {
+		this.dataCadastro = dataCadastro;
 	}
 
 	@Override
