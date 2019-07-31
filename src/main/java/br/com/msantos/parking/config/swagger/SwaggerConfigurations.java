@@ -1,11 +1,15 @@
 package br.com.msantos.parking.config.swagger;
 
+import java.util.Arrays;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import br.com.msantos.parking.models.Colaborador;
+import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.schema.ModelRef;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 
@@ -19,14 +23,14 @@ public class SwaggerConfigurations {
 				.apis(RequestHandlerSelectors.basePackage("br.com.msantos.parking"))
 				.paths(PathSelectors.ant("/**"))
 				.build()
-				.ignoredParameterTypes(Colaborador.class);
-//				.globalOperationParameters(Arrays.asList(
-//						new ParameterBuilder()
-//						.name("Autorization")
-//						.description("Header para token JWT")
-//						.modelRef(new ModelRef("string"))
-//						.parameterType("header")
-//						.required(false)
-//						.build()));
+				.ignoredParameterTypes(Colaborador.class)
+				.globalOperationParameters(Arrays.asList(
+						new ParameterBuilder()
+						.name("Autorization")
+						.description("Header para token JWT")
+						.modelRef(new ModelRef("string"))
+						.parameterType("header")
+						.required(false)
+						.build()));
 	}
 }
