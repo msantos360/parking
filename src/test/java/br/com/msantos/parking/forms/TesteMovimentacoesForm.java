@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import br.com.msantos.parking.models.Movimentacoes;
@@ -39,6 +40,16 @@ public class TesteMovimentacoesForm {
 
 		movimentacoesRepository.save(movimentacoes);
 
+	}
+	
+	@Test
+	public void teste() {
+		
+		String senha = "123";
+		
+		String hashpw = BCrypt.hashpw(senha, BCrypt.gensalt());
+		
+		System.out.println(hashpw);
 	}
 
 }
